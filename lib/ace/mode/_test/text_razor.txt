@@ -1,0 +1,13 @@
+@inherits MyNamespace.MyClass<GenericArgument>.MyNestedClass<GenericArgument>
+@model MyNamespace.MyClass<GenericArgument>.MyNestedClass<GenericArgument>
+@using MyOtherNamespace
+
+<span>@{
+    if(true) { 
+        DoSomething();
+    }
+}</span>
+
+@helper DoSomething("A") {
+    // code
+}

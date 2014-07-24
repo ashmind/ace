@@ -1,0 +1,51 @@
+@model AlbumItemModel
+
+<span class="item">
+  @{ const int ImmediateImageCount = 20; /* TODO: config */ }
+  @{ var urlBase = Model.GetImageUrlBase(ViewContext.RequestContext); }
+
+  <a @(!Model.IsProposedToBeDeleted ? "rel=normal-gallery-item" : "")
+     href="@(urlBase + "/" + ImageSize.Medium.Name.ToLowerInvariant())"
+     data-name="@Model.Name"     
+     data-json="{
+        name : '@Model.Name',
+
+        @(Html.Raw(Model.PrimaryAlbumID != null ? "primaryAlbumID : '" + Model.PrimaryAlbumID + "'," : "")) 
+
+        actions : {
+            '@(Model.IsProposedToBeDeleted ? "restore" : "delete")' : {
+                action : '@(Url.Action(
+                  (Model.IsProposedToBeDeleted ? "Revert" : "Propose") + "Delete", "AlbumItem",
+                      new { album = Model.CurrentAlbumID, item = Model.Name }
+                ))',
+
+                text : '@(Model.IsProposedToBeDeleted ? "Restore" : "Propose to delete")'
+            },
+
+            download : {
+                action : '@urlBase',
+                sizes : {
+                    '@(ImageSize.Small.Size)px' : '@ImageSize.Small.Name.ToLowerInvariant()',
+                    '@(ImageSize.Medium.Size)px' : '@ImageSize.Medium.Name.ToLowerInvariant()',
+                    '@(ImageSize.Large.Size)px' : '@ImageSize.Large.Name.ToLowerInvariant()',
+                    '@ImageSize.Original.Name' : '@ImageSize.Original.Name.ToLowerInvariant()'
+                }
+            }
+        }
+      }"
+      class="image-view">
+
+      @{ 
+        var src = urlBase + "/" + ImageSize.Thumbnail.Name.ToLowerInvariant();
+        var downloadUrl = "image/jpg:" + Model.Name + ":" + (urlBase + "/" + ImageSize.Large.Name.ToLowerInvariant());
+      }
+      @if (Model.ItemIndex < ImmediateImageCount) {
+        <img src="@src" data-downloadurl="@downloadUrl" />
+      }
+      else { 
+        <img src="@Url.Content("~/content/images/blank.gif")"
+             data-lazysrc="@src"
+             data-downloadurl="@downloadUrl" />          
+      }
+  </a>
+</span>

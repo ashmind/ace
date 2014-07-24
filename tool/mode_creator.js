@@ -104,7 +104,7 @@ document.getElementById("perfTest").onclick = function() {
 
 util.fillDropdown("themeEl", {
     bright: [
-        "chrome", "clouds", "crimson_editor", "dawn", "dreamweaver", "eclipse", "github",
+        "chrome", "chrome_razor", "clouds", "crimson_editor", "dawn", "dreamweaver", "eclipse", "github",
         "solarized_light", "textmate", "tomorrow", "xcode"],
     dark: [ "clouds_midnight", "cobalt", "idle_fingers", "kr_theme", "merbivore", "merbivore_soft",
         "mono_industrial", "monokai", "pastel_on_dark", "solarized_dark",  "terminal", "tomorrow_night",
